@@ -20,3 +20,9 @@ D:\CsharpProjects\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\Scenar
 D:\CsharpProjects\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\ScenarioManager.runtimeconfig.dev.json
 D:\CsharpProjects\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\ScenarioManager.dll
 D:\CsharpProjects\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\ScenarioManager.pdb
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.csprojAssemblyReference.cache
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.csproj.CoreCompileInputs.cache
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.AssemblyInfoInputs.cache
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.AssemblyInfo.cs
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.dll
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.pdb

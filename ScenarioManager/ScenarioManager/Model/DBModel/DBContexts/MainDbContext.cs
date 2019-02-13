@@ -35,12 +35,7 @@ namespace ScenarioManager.Model.DBModel.DBContexts
                 .HasOne(p => p.UserGroup)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
-
-
-            modelBuilder.Entity<Scenario>()
-              .HasOne(p => p.Author)
-              .WithMany()
-              .OnDelete(DeleteBehavior.SetNull);
+            
         }
     }
 }
