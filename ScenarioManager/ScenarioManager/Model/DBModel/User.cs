@@ -17,7 +17,7 @@ namespace ScenarioManager.Model.DBModel
 
         [Required]
         public long UserGroupId { get; set; }
-        [Required]
+
         [ForeignKey("UserGroupId")]
         public UserGroup UserGroup { get; set; }
     }

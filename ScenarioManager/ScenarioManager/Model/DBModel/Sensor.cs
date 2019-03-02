@@ -17,8 +17,11 @@ namespace ScenarioManager.Model.DBModel
         public string Description { get; set; }
         [Required]
         public int Type { get; set; }
-        [Required]
+
         [ForeignKey("ControllerId")]
-        public Controller Controller { get; set; }
+        public SmartController Controller { get; set; }
+        [Required]
+        public long ControllerId { get; set; }
+
     }
 }

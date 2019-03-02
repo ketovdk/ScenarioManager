@@ -15,7 +15,7 @@ namespace ScenarioManager.Controllers
     [Produces("application/json")]
     [Route("api/Scenario")]
     [Authorize]
-    public class ScenarioController:Controller
+    public class ScenarioController: Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ScenarioRepository _scenarioRepository;
         private readonly UserGroupRepository _userGroupRepository;

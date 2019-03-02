@@ -17,6 +17,7 @@ namespace ScenarioManager.Model.DBModel.DBContexts
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Scenario> Scenarios { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<SmartController> Controllers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserGroup>()
