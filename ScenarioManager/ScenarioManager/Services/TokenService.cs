@@ -17,7 +17,7 @@ namespace ScenarioManager.Services
         public static string Audience { get; private set; } = "defauleAudience";  // потребитель токена
         private static string _accessKey = "mysupersecret_secretkey!123";   // ключ для шифрации, надо сгенерировать
         private static string _refreshKey = "mysupersecret_secretkey!123";
-        public static int LifeTime = 10; // время жизни токена - 1 минута
+        public static int LifeTime = 10; 
         public static int RefreshLifeTime = 20;
 
       

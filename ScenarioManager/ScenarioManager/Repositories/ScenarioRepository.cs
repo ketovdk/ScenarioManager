@@ -33,8 +33,8 @@ namespace ScenarioManager.Repositories
                 throw new Exception("Сценарий с таким Id не обнаружен");
             if (input.Name != null)
                 scenario.Name = input.Name;
-            if (input.Text != null)
-                scenario.Text = input.Text;
+            if (input.Script != null)
+                scenario.Script = input.Script;
             if (input.Description != null)
                 scenario.Description = input.Description;
             if (input.UserGroup != null)

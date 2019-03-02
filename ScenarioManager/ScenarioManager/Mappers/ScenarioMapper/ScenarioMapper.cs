@@ -16,7 +16,7 @@ namespace ScenarioManager.Mappers.ScenarioMapper
                 Id = input.Id,
                 Description = input.Description,
                 Name = input.Name,
-                Text = input.Text,
+                Text = input.Script,
                 UserGroup = input.UserGroup
             };
         }

@@ -26,3 +26,8 @@ C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\Scenar
 C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.AssemblyInfo.cs
 C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.dll
 C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Debug\netcoreapp2.0\ScenarioManager.pdb
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\ScenarioManager.deps.json
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\ScenarioManager.runtimeconfig.json
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\ScenarioManager.runtimeconfig.dev.json
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\ScenarioManager.dll
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Debug\netcoreapp2.0\ScenarioManager.pdb

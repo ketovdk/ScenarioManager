@@ -19,14 +19,18 @@ namespace ScenarioManager.Model.DBModel
 
         public string Description { get; set; }
         [Required]
-        public string Text { get; set; }
+        public string Script { get; set; }
 
-
+        [Required]
+        public string Author { get; set; }
+        [Required]
+        public bool Publicity { get; set; }
+        [Required]
+        public int Type { get; set; }
         [Required]
         public long UserGroupId { get; set; }
         [Required]
         [ForeignKey("UserGroupId")]
         public UserGroup UserGroup { get; set;}
-
     }
 }
