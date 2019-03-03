@@ -18,6 +18,8 @@ namespace ScenarioManager.Model.DBModel.DBContexts
         public DbSet<Scenario> Scenarios { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<SmartController> Controllers { get; set; }
+        public DbSet<Sensor> Sensors { get; set; }
+        public DbSet<SmartThing> SmartThings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserGroup>()
@@ -25,7 +27,20 @@ namespace ScenarioManager.Model.DBModel.DBContexts
                 .WithMany(t => t.ChildrenGroups)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Sensor>()
+                 .HasOne(p => p.Controller)
+                 .WithMany()
+                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<SmartThing>()
+                 .HasOne(p => p.Controller)
+                 .WithMany()
+                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<SmartController>()
+                 .HasOne(p => p.UserGroup)
+                 .WithMany()
+                 .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<User>()
                  .HasOne(p => p.UserGroup)
                  .WithMany()

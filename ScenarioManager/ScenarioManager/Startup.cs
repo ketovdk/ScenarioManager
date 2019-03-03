@@ -58,6 +58,10 @@ namespace ScenarioManager
             services.AddScoped<AccountService>();
             services.AddScoped<TokenService>();
             services.AddScoped<LoginService>();
+            services.AddScoped<SensorRepository>();
+            services.AddScoped<SmartThingRepository>();
+            services.AddScoped<ControllerRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
