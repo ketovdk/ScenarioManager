@@ -26,7 +26,11 @@ namespace ScenarioManager.Controllers
             _userGroupRepository = userGroupRepository;
             _mapper = mapper;
         }
-
+        [HttpGet("Public")]
+        public IEnumerable<ScenarioDTO> PublicScenarios()
+        {
+            return _scenarioRepository.Scenarios.Where(x => x.Publicity).Select(x=>_mapper.Map(x));
+        }
         [HttpGet("Available")]
         public IEnumerable<ScenarioDTO> ParentScenarios()
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace ScenarioManager.Model.DBModel.DBContexts
         public MainDbContext(DbContextOptions<MainDbContext> options)
            : base(options)
         {
-            Database.EnsureCreated();
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Admin> Admins { get; set; }
@@ -20,8 +20,16 @@ namespace ScenarioManager.Model.DBModel.DBContexts
         public DbSet<SmartController> Controllers { get; set; }
         public DbSet<Sensor> Sensors { get; set; }
         public DbSet<SmartThing> SmartThings { get; set; }
+
+        //эти два сета лучше вынести в отдельную базу
+
+        public DbSet<UserLoginInfo> UserLoginInfos { get; set; }
+        public DbSet<TokenGuid> TokenGuids { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<UserGroup>()
                 .HasOne(p => p.ParentGroup)
                 .WithMany(t => t.ChildrenGroups)
@@ -52,6 +60,16 @@ namespace ScenarioManager.Model.DBModel.DBContexts
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
             
+        }
+    }
+    public class ApplicationContextDbFactory : IDesignTimeDbContextFactory<MainDbContext>
+    {
+        MainDbContext IDesignTimeDbContextFactory<MainDbContext>.CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MainDbContext>();
+            optionsBuilder.UseNpgsql<MainDbContext>("Host=localhost;Port=5432;Database=ScenarioMain;Username=postgres;Password=Qwerty1;Pooling=true");
+
+            return new MainDbContext(optionsBuilder.Options);
         }
     }
 }

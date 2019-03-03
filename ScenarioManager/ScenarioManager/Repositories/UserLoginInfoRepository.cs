@@ -9,15 +9,15 @@ namespace ScenarioManager.Repositories
 {
     public class UserLoginInfoRepository
     {
-        private readonly UserDbContext _context;
-        public UserLoginInfoRepository(UserDbContext context)
+        private readonly MainDbContext _context;
+        public UserLoginInfoRepository(MainDbContext context)
         {
             _context = context;
         }
 
         public UserLoginInfo this[string login]
         {
-            get => _context.Users.Where(x => x.Login == login).FirstOrDefault();
+            get => _context.UserLoginInfos.Where(x => x.Login == login).FirstOrDefault();
         }
         public void Add(UserLoginInfo input)
         {

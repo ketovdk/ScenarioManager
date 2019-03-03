@@ -9,8 +9,8 @@ namespace ScenarioManager.Repositories
 {
     public class TokenRepository
     {
-        private readonly UserDbContext _userDbContext; 
-        public TokenRepository(UserDbContext userDbContext)
+        private readonly MainDbContext _userDbContext; 
+        public TokenRepository(MainDbContext userDbContext)
         {
             _userDbContext = userDbContext;
         }
