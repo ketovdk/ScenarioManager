@@ -25,11 +25,15 @@ namespace ScenarioManager.Model.DBModel.DBContexts
 
         public DbSet<UserLoginInfo> UserLoginInfos { get; set; }
         public DbSet<TokenGuid> TokenGuids { get; set; }
-
+        public DbSet<ControllerScenarios> ControllerScnarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ControllerScenarios>()                .
+                .HasOne(p => p.Scenario)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<UserGroup>()
                 .HasOne(p => p.ParentGroup)
                 .WithMany(t => t.ChildrenGroups)

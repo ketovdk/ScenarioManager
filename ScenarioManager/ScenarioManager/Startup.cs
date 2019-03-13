@@ -80,6 +80,7 @@ namespace ScenarioManager
             services.AddScoped<SensorRepository>();
             services.AddScoped<SmartThingRepository>();
             services.AddScoped<ControllerRepository>();
+            services.AddScoped<ControllerScenariosRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -88,14 +89,10 @@ namespace ScenarioManager
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
                             // укзывает, будет ли валидироваться издатель при валидации токена
-                            ValidateIssuer = true,
-                            // строка, представляющая издателя
-                            ValidIssuer = "defaultIssuer",
+                            ValidateIssuer = false,
 
                             // будет ли валидироваться потребитель токена
-                            ValidateAudience = true,
-                            // установка потребителя токена
-                            ValidAudience = "defauleAudience",
+                            ValidateAudience = false,
                             // будет ли валидироваться время существования
                             ValidateLifetime = true,
 

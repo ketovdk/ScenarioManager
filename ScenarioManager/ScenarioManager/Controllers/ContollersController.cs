@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ScenarioManager.Model.DBModel;
 using ScenarioManager.Model.DTO.Controller;
 using ScenarioManager.Repositories;
@@ -13,9 +14,10 @@ namespace ScenarioManager.Controllers
     [Produces("application/json")]
     [Route("api/Controller")]
     [Authorize]
-    public class ControllersController:Controller
+    public class ControllersController : Controller
     {
         private readonly ControllerRepository _controllerRepository;
+        private readonly ControllerScenariosRepository _scenarios;
         public ControllersController(ControllerRepository controllerRepository)
         {
             _controllerRepository = controllerRepository;
@@ -31,7 +33,17 @@ namespace ScenarioManager.Controllers
             return _controllerRepository.Controllers.Where(x => x.Id == id && x.UserGroupId == GetUserGroupId()).FirstOrDefault();
         }
 
-
+        [HttpGet("Scenarios/{controllerId}")]
+        public IEnumerable<Scenario> GetScenarios(long controllerId)
+        {
+            return _scenarios.All.Include(x => x.Scenario).Where(x => x.ControllerId == controllerId).Select(x => x.Scenario);
+        }
+        [HttpPost("Scenarios")]
+        public void SetScenarios([FromBody] Scenarios input)
+        {
+            _scenarios.Set(input.ScenarioIds, input.ControllerId);
+            _scenarios.SaveChanges();
+        }
         private long GetUserGroupId()
         {
             return Convert.ToInt64(User.Claims.Where(x => x.Type == Constants.ClaimTypeNames.UserGroupId).FirstOrDefault().Value);
@@ -65,6 +77,7 @@ namespace ScenarioManager.Controllers
         public void DeleteController(long id)
         {
             _controllerRepository.Delete(id);
+            _controllerRepository.SaveChanges();
         }
 
     }

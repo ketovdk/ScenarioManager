@@ -24,12 +24,14 @@ namespace ScenarioManager.Controllers
         private readonly IMapper<Admin, AdminWithPassword> _mapper;
         private readonly AccountService _accountService;
         private readonly TokenRepository _tokenRepository;
-        public AdminController(AdminRepository repository, IMapper<Admin, AdminWithPassword> mapper, AccountService accountService, TokenRepository tokenRepository)
+        private readonly UserRepository _userRepository;
+        public AdminController(AdminRepository repository, UserRepository userRepository, IMapper<Admin, AdminWithPassword> mapper, AccountService accountService, TokenRepository tokenRepository)
         {
             _repository = repository;
             _mapper = mapper;
             _accountService = accountService;
             _tokenRepository = tokenRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -42,6 +44,31 @@ namespace ScenarioManager.Controllers
         public Admin GetAdmin(string login)
         {
             return _repository.Admins.Where(x => x.Login == login).FirstOrDefault();
+        }
+
+        [HttpPost("User")]
+        public void CreateUser([FromBody] UserCreate input)
+        {
+            var loginPassword = new LoginPassword()
+            {
+                Login = input.Login,
+                Password = input.Password
+            };
+            if (input.UserType == UserType.Integrator)
+            {
+                _accountService.RegisterIntegrator(loginPassword, input.UserGroupId);
+            }
+            else
+            {
+                _accountService.RegisterUser(loginPassword, input.UserGroupId);
+            }
+            _userRepository.Create(new User()
+            {
+                Login = input.Login,
+                UserGroupId = input.UserGroupId,
+                UserType = input.UserType,
+            });
+            _userRepository.SaveChanges();
         }
 
         [HttpPost]

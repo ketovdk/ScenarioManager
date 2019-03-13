@@ -18,7 +18,7 @@ namespace ScenarioManager.Model.DBModel
 
         public long? ParentGroupId { get; set; }
 
-        [ForeignKey("ParentGropId")]
+        [ForeignKey("ParentGroupId")]
         public virtual UserGroup ParentGroup { get; set; }
         public virtual IEnumerable<UserGroup> ChildrenGroups { get; set; }
     }
