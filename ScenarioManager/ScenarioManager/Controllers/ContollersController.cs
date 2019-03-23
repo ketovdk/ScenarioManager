@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ScenarioManager.Constants;
 
 namespace ScenarioManager.Controllers
 {
@@ -30,13 +31,24 @@ namespace ScenarioManager.Controllers
         [HttpGet("{id}")]
         public SmartController Controller(long id)
         {
-            return _controllerRepository.Controllers.Where(x => x.Id == id && x.UserGroupId == GetUserGroupId()).FirstOrDefault();
+            return _controllerRepository.Controllers.FirstOrDefault(x => x.Id == id && x.UserGroupId == GetUserGroupId());
+        }
+
+        [HttpPost("TurnScenario")]
+        public void TurnScenario([FromBody] ControllerScenarios input)
+        {
+            _scenarios.Set(input.ScenarioId, input.ControllerId, input.TurnedOn);
+            _scenarios.SaveChanges();
         }
 
         [HttpGet("Scenarios/{controllerId}")]
-        public IEnumerable<Scenario> GetScenarios(long controllerId)
+        public IEnumerable<ScenarioOutput> GetScenarios(long controllerId)
         {
-            return _scenarios.All.Include(x => x.Scenario).Where(x => x.ControllerId == controllerId).Select(x => x.Scenario);
+            return _scenarios.All.Include(x => x.Scenario).Where(x => x.ControllerId == controllerId).Select(x => new ScenarioOutput()
+                {
+                    Scenario = x.Scenario,
+                    TurnedOn = x.TurnedOn
+                });
         }
         [HttpPost("Scenarios")]
         public void SetScenarios([FromBody] Scenarios input)
@@ -46,7 +58,7 @@ namespace ScenarioManager.Controllers
         }
         private long GetUserGroupId()
         {
-            return Convert.ToInt64(User.Claims.Where(x => x.Type == Constants.ClaimTypeNames.UserGroupId).FirstOrDefault().Value);
+            return Convert.ToInt64(User.Claims.FirstOrDefault(x => x.Type == ClaimTypeNames.UserGroupId).Value);
         }
         [HttpPost]
         public SmartController CreateController([FromBody]CreateControllerInput input)
@@ -54,6 +66,7 @@ namespace ScenarioManager.Controllers
             var returning= _controllerRepository.CreateController(new SmartController()
             {
                 Name = input.Name,
+                Password = input.Password,
                 UserGroupId = input.UserGroupId,
                 Type = input.Type,
                 Description = input.Description
@@ -67,6 +80,7 @@ namespace ScenarioManager.Controllers
             _controllerRepository.EditController(new SmartController()
             {
                 Name = input.Name,
+                Password = input.Password,
                 UserGroupId = input.UserGroupId,
                 Type = input.Type,
                 Description = input.Description

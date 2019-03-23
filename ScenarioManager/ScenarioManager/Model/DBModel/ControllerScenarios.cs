@@ -17,6 +17,8 @@ namespace ScenarioManager.Model.DBModel
         public long ControllerId { get; set; }
         [ForeignKey("ScenarioId")]
         public Scenario Scenario { get; set; }
-
+        [ForeignKey("ControllerId")]
+        public SmartController Controller { get; set; }
+        public bool TurnedOn { get; set; }
     }
 }

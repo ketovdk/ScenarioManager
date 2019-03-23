@@ -24,14 +24,23 @@ namespace ScenarioManager.Repositories
         {
             _context.SaveChanges();
         }
-        public void Set(IEnumerable<long> scenarioIds, long controllerId)
+        public void Set(IEnumerable<KeyValuePair<long, bool>> scenarioIds, long controllerId)
         {
             Remove(controllerId);
             _context.AddRange(scenarioIds.Select(x => new ControllerScenarios()
             {
-                ScenarioId = x,
+                ScenarioId = x.Key,
+                TurnedOn = x.Value,
                 ControllerId = controllerId
             }));
+        }
+
+        public void Set(long scenarioId, long controllerId, bool turnedOn)
+        {
+            var cur = All.FirstOrDefault(x => x.ScenarioId == scenarioId && x.ControllerId == controllerId);
+            if (cur == null)
+                throw new Exception("Такая связь не найдена");
+            cur.TurnedOn = value;
         }
     }
 }

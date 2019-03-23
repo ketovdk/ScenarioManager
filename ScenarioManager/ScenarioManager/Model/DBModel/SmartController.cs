@@ -13,6 +13,8 @@ namespace ScenarioManager.Model.DBModel
         [Required]
         public long Id { get; set; }
         [Required]
+        public string Password { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
         [Required]

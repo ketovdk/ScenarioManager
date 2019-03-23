@@ -7,7 +7,8 @@ namespace ScenarioManager.Model.DTO.Controller
 {
     public class Scenarios
     {
-        public IEnumerable<long> ScenarioIds { get; set; }
+        //Ключ сценария, включен/выключен
+        public IEnumerable<KeyValuePair<long, bool>> ScenarioIds { get; set; }
         public long ControllerId { get; set; }
     }
 }
