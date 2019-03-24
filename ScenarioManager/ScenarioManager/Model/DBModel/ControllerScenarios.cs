@@ -9,10 +9,8 @@ namespace ScenarioManager.Model.DBModel
 {
     public class ControllerScenarios
     {
-        [Key]
         [Required]
         public long ScenarioId { get; set; }
-        [Key]
         [Required]
         public long ControllerId { get; set; }
         [ForeignKey("ScenarioId")]
