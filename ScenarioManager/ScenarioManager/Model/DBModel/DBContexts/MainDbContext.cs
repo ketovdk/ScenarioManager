@@ -29,11 +29,12 @@ namespace ScenarioManager.Model.DBModel.DBContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ControllerScenarios>().HasKey(s => new {s.ControllerId, s.ScenarioId});
             modelBuilder.Entity<ControllerScenarios>()                
                 .HasOne(p => p.Scenario)
                 .WithMany()
-                .HasForeignKey(s=>new {s.ControllerId, s.ScenarioId})
                 .OnDelete(DeleteBehavior.Cascade)
                 ;
             modelBuilder.Entity<UserGroup>()

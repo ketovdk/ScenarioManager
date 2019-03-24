@@ -40,7 +40,7 @@ namespace ScenarioManager.Repositories
             var cur = All.FirstOrDefault(x => x.ScenarioId == scenarioId && x.ControllerId == controllerId);
             if (cur == null)
                 throw new Exception("Такая связь не найдена");
-            cur.TurnedOn = value;
+            cur.TurnedOn = turnedOn;
         }
     }
 }
