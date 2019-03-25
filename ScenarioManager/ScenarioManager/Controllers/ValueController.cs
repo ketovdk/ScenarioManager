@@ -20,7 +20,9 @@ namespace ScenarioManager.Controllers
         private readonly ControllerRepository _controllerRepository;
         private readonly ControllerScenariosRepository _connections;
         private readonly UserGroupRepository _userGroupRepository;
+        private readonly AdminRepository _adminRepository;
         public ValueController(LoginService loginService,
+            AdminRepository adminRepository,
             UserRepository userRepository,
             ScenarioRepository scenarioRepository,
             ControllerRepository controllerRepository,
@@ -28,6 +30,7 @@ namespace ScenarioManager.Controllers
             UserGroupRepository userGroupRepository,
                 UserLoginInfoRepository userLoginInfoRepository)
         {
+            _adminRepository = adminRepository;
             _userRepository = userRepository;
             _scenarioRepository = scenarioRepository;
             _connections = connections;
@@ -45,14 +48,19 @@ namespace ScenarioManager.Controllers
         [HttpGet("InitUser")]
         public string Init()
         {
-            /*_loginService.Register(
+            _loginService.Register(
                 new Model.DTO.UserInfoDTO.LoginPassword()
                 {
                     Login="Dima",
                     Password="Qwerty1"
                 },
                 Constants.RoleNames.Admin);
-            _userLoginInfoRepository.SaveChanges();*/
+            _adminRepository.Create(new Admin()
+            {
+                FIO="DimaK",
+                Login="Dima"
+            });
+            _userLoginInfoRepository.SaveChanges();
             _loginService.Register(
                 new Model.DTO.UserInfoDTO.LoginPassword()
                 {
