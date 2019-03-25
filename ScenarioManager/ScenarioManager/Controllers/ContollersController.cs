@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ScenarioManager.Constants;
+using ScenarioManager.Services;
 
 namespace ScenarioManager.Controllers
 {
@@ -18,11 +19,11 @@ namespace ScenarioManager.Controllers
     public class ControllersController : Controller
     {
         private readonly ControllerRepository _controllerRepository;
-        private readonly ControllerScenariosRepository _scenarios;
+        private readonly ControllerScenariosRepository _connections;
         public ControllersController(ControllerRepository controllerRepository, ControllerScenariosRepository scenarios)
         {
             _controllerRepository = controllerRepository;
-            _scenarios = scenarios;
+            _connections = scenarios;
         }
         [HttpGet]
         public IEnumerable<SmartController> Controllers()
@@ -38,24 +39,28 @@ namespace ScenarioManager.Controllers
         [HttpPost("TurnScenario")]
         public void TurnScenario([FromBody] ControllerScenarios input)
         {
-            _scenarios.Set(input.ScenarioId, input.ControllerId, input.TurnedOn);
-            _scenarios.SaveChanges();
+            _connections.Set(input.ScenarioId, input.ControllerId, input.TurnedOn);
+            _connections.SaveChanges();
         }
 
         [HttpGet("Scenarios/{controllerId}")]
         public IEnumerable<ScenarioOutput> GetScenarios(long controllerId)
         {
-            return _scenarios.All.Include(x => x.Scenario).Where(x => x.ControllerId == controllerId).Select(x => new ScenarioOutput()
+            return _connections.All.Include(x => x.Scenario).Where(x => x.ControllerId == controllerId).Select(x => new ScenarioOutput()
                 {
                     Scenario = x.Scenario,
                     TurnedOn = x.TurnedOn
                 });
         }
         [HttpPost("Scenarios")]
-        public void SetScenarios([FromBody] Scenarios input)
+        public async Task SetScenarios([FromBody] Scenarios input)
         {
-            _scenarios.Set(input.ScenarioIds, input.ControllerId);
-            _scenarios.SaveChanges();
+            _connections.Set(input.ScenarioIds, input.ControllerId);
+            var controller = _controllerRepository.Controllers.FirstOrDefault(x => x.Id == input.ControllerId);
+            if (controller == null)
+                throw new Exception("Контроллер не найден");
+            await ControllerInfoSender.ListUpdateAsync(controller.Adress);
+            _connections.SaveChanges();
         }
         private long GetUserGroupId()
         {

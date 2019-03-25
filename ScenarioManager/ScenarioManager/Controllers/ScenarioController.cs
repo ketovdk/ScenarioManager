@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ScenarioManager.Services;
 
 namespace ScenarioManager.Controllers
 {
@@ -19,12 +20,17 @@ namespace ScenarioManager.Controllers
     {
         private readonly ScenarioRepository _scenarioRepository;
         private readonly UserGroupRepository _userGroupRepository;
+        private readonly ControllerScenariosRepository _connections;
         private readonly IMapper<ScenarioDTO, Scenario> _mapper;
-        public ScenarioController(ScenarioRepository scenarioRepository, UserGroupRepository userGroupRepository, IMapper<ScenarioDTO, Scenario> mapper)
+        public ScenarioController(ScenarioRepository scenarioRepository,
+            UserGroupRepository userGroupRepository,
+            IMapper<ScenarioDTO, Scenario> mapper,
+            ControllerScenariosRepository connections)
         {
             _scenarioRepository = scenarioRepository;
             _userGroupRepository = userGroupRepository;
             _mapper = mapper;
+            _connections = connections;
         }
         [HttpGet("Public")]
         public IEnumerable<ScenarioDTO> PublicScenarios()
@@ -61,15 +67,20 @@ namespace ScenarioManager.Controllers
 
         [Authorize(Roles =Constants.RoleNames.Integrator)]
         [HttpPut]
-        public void EditScenario([FromBody]Scenario input)
+        public async Task EditScenario([FromBody]Scenario input)
         {
-            var currentScenario = _scenarioRepository.Scenarios.Where(x => x.Id == input.Id).FirstOrDefault();
+            var currentScenario = _scenarioRepository.Scenarios.FirstOrDefault(x => x.Id == input.Id);
             if (currentScenario == null)
                 throw new Exception("Такого сценария не существует");
             var children = _userGroupRepository.GetChildrenGroups(GetUserGroupId());
             if (children.Contains(currentScenario.UserGroupId))
             {
                 _scenarioRepository.EditScenario(input);
+                foreach (var controller in _connections.All.Include(x => x.Controller)
+                    .Where(x => x.ScenarioId == input.Id).Select(x => x.Controller))
+                {
+                    await ControllerInfoSender.UpdateAsync(controller.Adress, input.Id);
+                }
                 _scenarioRepository.SaveChanges();
             }
             else
@@ -78,15 +89,20 @@ namespace ScenarioManager.Controllers
 
         [Authorize(Roles = Constants.RoleNames.Integrator)]
         [HttpDelete("{id}")]
-        public void DeleteScenario(long id)
+        public async Task DeleteScenario(long id)
         {
-            var currentScenario = _scenarioRepository.Scenarios.Where(x => x.Id == id).FirstOrDefault();
+            var currentScenario = _scenarioRepository.Scenarios.FirstOrDefault(x => x.Id == id);
             if (currentScenario == null)
                 throw new Exception("Такого сценария не существует");
             var children = _userGroupRepository.GetChildrenGroups(GetUserGroupId());
             if (children.Contains(currentScenario.UserGroupId))
             {
-                _scenarioRepository.Delete(id);
+                _scenarioRepository.Delete(id);;
+                foreach (var controller in _connections.All.Include(x => x.Controller)
+                    .Where(x => x.ScenarioId == id).Select(x => x.Controller))
+                {
+                    await ControllerInfoSender.DeleteAsync(controller.Adress, id);
+                }
                 _scenarioRepository.SaveChanges();
             }
             else
