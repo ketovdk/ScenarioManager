@@ -102,9 +102,9 @@ namespace ScenarioManager
                             ValidateIssuerSigningKey = true,
                         };
                     });
+            services.AddCors();
 
-
-
+           
             services.AddMvc();
         }
 
@@ -115,6 +115,7 @@ namespace ScenarioManager
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             app.UseMvc();
         }
