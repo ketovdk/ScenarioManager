@@ -31,7 +31,8 @@ namespace ScenarioManager.Repositories
                 user.UserGroupId = input.UserGroup.Id;
             if (input.UserType != user.UserType)
                 user.UserType = input.UserType;
-
+            if (input.FIO != null)
+                user.FIO = input.FIO;
             return input;
         }
 

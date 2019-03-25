@@ -32,6 +32,8 @@ namespace ScenarioManager.Repositories
         {
             var admin = Admins.Where(x => x.Login == input.Login).FirstOrDefault();
             CheckAdmin(admin);
+            if (input.FIO != null)
+                admin.FIO = input.FIO;
             // some changes
         }
 

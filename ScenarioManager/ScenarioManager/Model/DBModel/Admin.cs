@@ -12,7 +12,7 @@ namespace ScenarioManager.Model.DBModel
         [Required]
         public string Login { get; set; }
 
-
+        public string FIO { get; set; }
         /// <summary>
         /// для Артемочки
         /// </summary>

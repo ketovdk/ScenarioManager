@@ -8,6 +8,7 @@ namespace ScenarioManager.Model.DTO.AdminDTO
     public class AdminWithPassword
     {
         public string Login { get; set; }
+        public string FIO { get; set; }
         public string Password { get; set; }
     }
 }

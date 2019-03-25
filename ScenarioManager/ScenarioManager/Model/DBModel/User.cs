@@ -14,7 +14,7 @@ namespace ScenarioManager.Model.DBModel
         public string Login { get; set; }
         [Required]
         public UserType UserType { get; set; }
-
+        public string FIO { get; set; }
         [Required]
         public long UserGroupId { get; set; }
 

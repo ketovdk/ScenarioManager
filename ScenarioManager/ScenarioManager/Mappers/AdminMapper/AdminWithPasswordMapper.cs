@@ -13,7 +13,8 @@ namespace ScenarioManager.Mappers.AdminMapper
         {
             return new Admin
             {
-                Login = input.Login
+                Login = input.Login,
+                FIO= input.FIO
             };
         }
     }
