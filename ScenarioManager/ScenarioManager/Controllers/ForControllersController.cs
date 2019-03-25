@@ -40,23 +40,36 @@ namespace ScenarioManager.Controllers
         }
 
         [HttpPost("Scenario")]
-        public Scenario GetScenario(ScenarioQuery input)
+        public string GetScenario([FromBody]ScenarioQuery input)
         {
-            return _connections.All.Include(x => x.Scenario)
+            var scenario =_connections.All.Include(x => x.Scenario)
                 .Include(x => x.Controller)
                 .FirstOrDefault(x =>
                 x.Controller.Id == input.Info.Id && 
                 x.Controller.Password == input.Info.Password &&
                 x.ScenarioId == input.ScenarioId)?.Scenario;
+            if (scenario == null)
+                throw new Exception("Scenario not found");
+            return scenario.Script;
         }
         [HttpPost("Scenarios")]
-        public IEnumerable<ScenarioOutput> GetScenarios(ControllerLoginInfo input)
+        public IEnumerable<ScenarioInfo> GetScenarios([FromBody]ControllerLoginInfo input)
         {
-            return _connections.All.Include(x => x.Scenario).Include(x=>x.Controller).Where(x => x.Controller.Id == input.Id&&x.Controller.Password==input.Password).Select(x => new ScenarioOutput()
+            return _connections.All.Include(x => x.Scenario)
+                .Include(x=>x.Controller)
+                .Where(x => x.Controller.Id == input.Id&&x.Controller.Password==input.Password).Select(x => new ScenarioInfo()
             {
-                Scenario = x.Scenario,
-                TurnedOn = x.TurnedOn
-            });
+                Text = x.Scenario.Script,
+                TurnedOn = x.TurnedOn,
+                Id=x.ScenarioId
+            } );
         }
+    }
+
+    public class ScenarioInfo
+    {
+        public string Text { get; set; }
+        public bool TurnedOn { get; set; }
+        public long Id { get; set; }
     }
 }

@@ -118,7 +118,18 @@ namespace ScenarioManager.Controllers
             else
                 throw new Exception("У вас нет доступа к этому пользователю");
         }
-
+        [HttpGet("AllIntegrators")]
+        [Authorize(Roles = Constants.RoleNames.Admin)]
+        public IEnumerable<UserDTO> GetIntegrators()
+        {
+            return _userRepository.Users.Where(x => x.UserType == UserType.Integrator).Select(x=>_mapper.Map(x));
+        }
+        [HttpGet("AllSimpleUsers")]
+        [Authorize(Roles = Constants.RoleNames.Admin)]
+        public IEnumerable<UserDTO> GetSimpleUsers()
+        {
+            return _userRepository.Users.Where(x => x.UserType == UserType.SimpleUser).Select(x=>_mapper.Map(x));
+        }
         [Authorize(Roles = Constants.RoleNames.Integrator)]
         [HttpPost]
         public void PostUser(UserCreate input)
