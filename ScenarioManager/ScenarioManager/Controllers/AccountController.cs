@@ -12,15 +12,23 @@ namespace ScenarioManager.Controllers
     [Route("api/Account")]
     public class AccountController:Controller
     {
+        private readonly TokenService _tokenService;
         private readonly AccountService _accountService;
-        public AccountController(AccountService accountService)
+        public AccountController(AccountService accountService, TokenService tokenService)
         {
             _accountService = accountService;
+            _tokenService = tokenService;
         }
         [HttpPost]
         public Token Login([FromBody]LoginPassword input)
         {
             return _accountService.LogIn(input);
+        }
+
+        [HttpPost]
+        public Token Refresh([FromBody] string token)
+        {
+            return _tokenService.UpdateFullTokenAsync(token).Result;
         }
     }
 }
