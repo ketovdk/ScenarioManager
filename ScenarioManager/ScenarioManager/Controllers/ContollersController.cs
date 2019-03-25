@@ -19,9 +19,10 @@ namespace ScenarioManager.Controllers
     {
         private readonly ControllerRepository _controllerRepository;
         private readonly ControllerScenariosRepository _scenarios;
-        public ControllersController(ControllerRepository controllerRepository)
+        public ControllersController(ControllerRepository controllerRepository, ControllerScenariosRepository scenarios)
         {
             _controllerRepository = controllerRepository;
+            _scenarios = scenarios;
         }
         [HttpGet]
         public IEnumerable<SmartController> Controllers()
@@ -67,6 +68,7 @@ namespace ScenarioManager.Controllers
             {
                 Name = input.Name,
                 Password = input.Password,
+                Adress=input.Adress,
                 UserGroupId = input.UserGroupId,
                 Type = input.Type,
                 Description = input.Description

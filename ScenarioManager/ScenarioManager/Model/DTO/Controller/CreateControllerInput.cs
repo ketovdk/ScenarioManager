@@ -12,5 +12,6 @@ namespace ScenarioManager.Model.DTO.Controller
         public string Description { get; set; }
         public int Type { get; set; }
         public long UserGroupId { get; set; }
+        public string Adress { get; set; }
     }
 }

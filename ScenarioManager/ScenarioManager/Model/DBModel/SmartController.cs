@@ -20,6 +20,7 @@ namespace ScenarioManager.Model.DBModel
         [Required]
         public int Type { get; set; }
 
+        public string Adress { get; set; }
         [ForeignKey("UserGroupId")]
         public UserGroup UserGroup { get; set; }
         [Required]

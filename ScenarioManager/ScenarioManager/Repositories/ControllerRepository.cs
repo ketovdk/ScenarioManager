@@ -36,6 +36,10 @@ namespace ScenarioManager.Repositories
                 controller.Type = input.Type;
             if (input.UserGroupId != -1)
                 controller.UserGroupId = input.UserGroupId;
+            if (input.Password != null)
+                controller.Password = input.Password;
+            if (input.Adress != null)
+                controller.Adress = input.Adress;
             return controller;
         }
 
