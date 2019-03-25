@@ -25,7 +25,7 @@ namespace ScenarioManager.Controllers
             return _accountService.LogIn(input);
         }
 
-        [HttpPost]
+        [HttpPost("Refresh")]
         public Token Refresh([FromBody] string token)
         {
             return _tokenService.UpdateFullTokenAsync(token).Result;
