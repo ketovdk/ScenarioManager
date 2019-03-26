@@ -1,0 +1,15 @@
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Release\netcoreapp2.2\appsettings.json
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Release\netcoreapp2.2\ScenarioManager.deps.json
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Release\netcoreapp2.2\ScenarioManager.runtimeconfig.json
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Release\netcoreapp2.2\ScenarioManager.runtimeconfig.dev.json
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Release\netcoreapp2.2\ScenarioManager.dll
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\bin\Release\netcoreapp2.2\ScenarioManager.pdb
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.csprojAssemblyReference.cache
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.csproj.CoreCompileInputs.cache
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.RazorAssemblyInfo.cache
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.RazorAssemblyInfo.cs
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.AssemblyInfoInputs.cache
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.AssemblyInfo.cs
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.RazorTargetAssemblyInfo.cache
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.dll
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.pdb
