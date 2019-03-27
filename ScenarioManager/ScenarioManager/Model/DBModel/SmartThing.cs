@@ -20,7 +20,10 @@ namespace ScenarioManager.Model.DBModel
 
         [ForeignKey("ControllerId")]
         public SmartController Controller { get; set; }
-        [Required]
-        public long ControllerId { get; set; }
+
+        public long? ControllerId { get; set; }
+        [ForeignKey("UserGroupId")]
+        public UserGroup UserGroup { get; set; }
+        public long UserGroupId { get; set; }
     }
 }

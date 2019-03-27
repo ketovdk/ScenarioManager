@@ -11,6 +11,7 @@ namespace ScenarioManager.Model.DTO.Sensor
         public string Name { get; set; }
         public string Description { get; set; }
         public int Type { get; set; }
-        public long ControllerId { get; set; }
+        public long? ControllerId { get; set; }
+        public long UserGroupId { get; set; }
     }
 }

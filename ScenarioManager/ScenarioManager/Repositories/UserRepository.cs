@@ -33,6 +33,8 @@ namespace ScenarioManager.Repositories
                 user.UserType = input.UserType;
             if (input.FIO != null)
                 user.FIO = input.FIO;
+            if (input.Info != null)
+                user.Info = input.Info;
             return input;
         }
 

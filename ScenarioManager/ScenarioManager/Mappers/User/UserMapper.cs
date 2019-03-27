@@ -15,7 +15,7 @@ namespace ScenarioManager.Mappers.User
             {
                 Login = input.Login,
                 UserGroup = input.UserGroup,
-                UserType = input.UserType
+                UserType = input.UserType,
             };
         }
     }

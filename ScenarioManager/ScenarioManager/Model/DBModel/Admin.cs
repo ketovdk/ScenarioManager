@@ -11,6 +11,7 @@ namespace ScenarioManager.Model.DBModel
         [Key]
         [Required]
         public string Login { get; set; }
+        public string Info { get; set; }
 
         public string FIO { get; set; }
         /// <summary>

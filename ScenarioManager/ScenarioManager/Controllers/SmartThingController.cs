@@ -43,7 +43,8 @@ namespace ScenarioManager.Controllers
                 Name = input.Name,
                 Description = input.Description,
                 ControllerId = input.ControllerId,
-                Type = input.Type
+                Type = input.Type,
+                UserGroupId = input.UserGroupId
             });
             _thingRepository.SaveChanges();
             return returning;
@@ -63,7 +64,7 @@ namespace ScenarioManager.Controllers
 
         private long GetUserGroupId()
         {
-            return Convert.ToInt64(User.Claims.Where(x => x.Type == Constants.ClaimTypeNames.UserGroupId).FirstOrDefault().Value);
+            return Convert.ToInt64(User.Claims.FirstOrDefault(x => x.Type == Constants.ClaimTypeNames.UserGroupId).Value);
         }
     }
 }

@@ -43,7 +43,8 @@ namespace ScenarioManager.Controllers
                 Name = input.Name,
                 Description = input.Description,
                 ControllerId = input.ControllerId,
-                Type = input.Type
+                Type = input.Type,
+                UserGroupId = input.UserGroupId
             });
             _sensorRepository.SaveChanges();
             return returning;

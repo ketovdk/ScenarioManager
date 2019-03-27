@@ -14,6 +14,7 @@ namespace ScenarioManager.Mappers.AdminMapper
             return new Admin
             {
                 Login = input.Login,
+                Info = input.Info,
                 FIO= input.FIO
             };
         }

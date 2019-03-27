@@ -12,5 +12,7 @@ namespace ScenarioManager.Model.DTO
         public UserType UserType { get; set; }
         public long UserGroupId { get; set; }
         public string Password { get; set; }
+        public string FIO { get; set; }
+        public string Info { get; set; }
     }
 }

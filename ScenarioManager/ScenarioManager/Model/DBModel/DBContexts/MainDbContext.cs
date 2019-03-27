@@ -37,6 +37,10 @@ namespace ScenarioManager.Model.DBModel.DBContexts
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade)
                 ;
+            modelBuilder.Entity<SmartThing>()
+                .HasOne(x => x.UserGroup).WithOne();
+            modelBuilder.Entity<Sensor>()
+                .HasOne(x => x.UserGroup).WithOne();
             modelBuilder.Entity<UserGroup>()
                 .HasOne(p => p.ParentGroup)
                 .WithMany(t => t.ChildrenGroups)

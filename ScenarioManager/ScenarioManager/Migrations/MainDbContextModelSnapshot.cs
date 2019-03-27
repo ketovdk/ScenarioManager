@@ -24,6 +24,10 @@ namespace ScenarioManager.Migrations
                     b.Property<string>("Login")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("FIO");
+
+                    b.Property<string>("Info");
+
                     b.Property<bool>("IsMainAdmin");
 
                     b.HasKey("Login");
@@ -80,7 +84,7 @@ namespace ScenarioManager.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long>("ControllerId");
+                    b.Property<long?>("ControllerId");
 
                     b.Property<string>("Description");
 
@@ -89,9 +93,14 @@ namespace ScenarioManager.Migrations
 
                     b.Property<int>("Type");
 
+                    b.Property<long>("UserGroupId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ControllerId");
+
+                    b.HasIndex("UserGroupId")
+                        .IsUnique();
 
                     b.ToTable("Sensors");
                 });
@@ -127,7 +136,7 @@ namespace ScenarioManager.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long>("ControllerId");
+                    b.Property<long?>("ControllerId");
 
                     b.Property<string>("Description");
 
@@ -136,9 +145,14 @@ namespace ScenarioManager.Migrations
 
                     b.Property<int>("Type");
 
+                    b.Property<long>("UserGroupId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ControllerId");
+
+                    b.HasIndex("UserGroupId")
+                        .IsUnique();
 
                     b.ToTable("SmartThings");
                 });
@@ -159,6 +173,10 @@ namespace ScenarioManager.Migrations
                 {
                     b.Property<string>("Login")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FIO");
+
+                    b.Property<string>("Info");
 
                     b.Property<long>("UserGroupId");
 
@@ -231,6 +249,11 @@ namespace ScenarioManager.Migrations
                         .WithMany()
                         .HasForeignKey("ControllerId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ScenarioManager.Model.DBModel.UserGroup", "UserGroup")
+                        .WithOne()
+                        .HasForeignKey("ScenarioManager.Model.DBModel.Sensor", "UserGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ScenarioManager.Model.DBModel.SmartController", b =>
@@ -246,6 +269,11 @@ namespace ScenarioManager.Migrations
                     b.HasOne("ScenarioManager.Model.DBModel.SmartController", "Controller")
                         .WithMany()
                         .HasForeignKey("ControllerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ScenarioManager.Model.DBModel.UserGroup", "UserGroup")
+                        .WithOne()
+                        .HasForeignKey("ScenarioManager.Model.DBModel.SmartThing", "UserGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

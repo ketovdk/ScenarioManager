@@ -31,13 +31,15 @@ namespace ScenarioManager.Repositories
                 throw new Exception("Sensor с таким Id не обнаружен");
             if (input.Name != null)
                 sensor.Name = input.Name;
-            if (input.ControllerId != -1)
+            if (input.ControllerId.HasValue)
                 sensor.ControllerId = input.ControllerId;
             if (input.Description != null)
                 sensor.Description = input.Description;
             if (input.Type != -1)
                 sensor.Type = input.Type;
-            
+            if (input.UserGroupId != -1)
+                sensor.UserGroupId = input.UserGroupId;
+
         }
 
 

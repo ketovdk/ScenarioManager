@@ -154,6 +154,8 @@ namespace ScenarioManager.Controllers
             _userRepository.Create(new User()
             {
                 Login = input.Login,
+                FIO=input.FIO,
+                Info=input.Info,
                 UserGroupId = input.UserGroupId,
                 UserType = input.UserType,
             });

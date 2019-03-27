@@ -34,6 +34,8 @@ namespace ScenarioManager.Repositories
             CheckAdmin(admin);
             if (input.FIO != null)
                 admin.FIO = input.FIO;
+            if (input.Info != null)
+                admin.Info = input.Info;
             // some changes
         }
 
