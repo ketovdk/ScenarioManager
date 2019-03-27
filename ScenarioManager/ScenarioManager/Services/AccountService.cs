@@ -50,6 +50,21 @@ namespace ScenarioManager.Services
             return _tokenService.GetFullTokenAsync(claimsIdentity).Result;
         }
 
+        public void ChangePassword(PasswordChange input)
+        {
+            var info = _loginService.Login(new LoginPassword()
+            {
+                Login = input.Login,
+                Password = input.PreviousPassword
+            });
+
+            _loginService.ChangePassword(new LoginPassword()
+            {
+                Login = input.Login,
+                Password = input.NewPassword
+            });
+        }
+
         public Token RegisterUser(LoginPassword input, long userGroupId)
         {
             _loginService.Register(input, Constants.RoleNames.SimpleUser);

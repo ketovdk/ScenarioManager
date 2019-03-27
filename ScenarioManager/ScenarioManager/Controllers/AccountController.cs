@@ -38,6 +38,11 @@ namespace ScenarioManager.Controllers
             return _tokenService.UpdateFullTokenAsync(token).Result;
         }
 
+        public void ChangePassword([FromBody] PasswordChange input)
+        {
+            _accountService.ChangePassword(input);
+        }
+
         [HttpGet("Info")]
         public AccountInfo GetInfo()
         {
