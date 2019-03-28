@@ -11,6 +11,10 @@ using ScenarioManager.Repositories;
 
 namespace ScenarioManager.Controllers
 {
+    public class SingleToken
+    {
+        public string Token { get; set; }
+    }
     [Produces("application/json")]
     [Route("api/Account")]
     public class AccountController:Controller
@@ -33,9 +37,9 @@ namespace ScenarioManager.Controllers
         }
 
         [HttpPost("Refresh")]
-        public Token Refresh([FromBody] string token)
+        public Token Refresh([FromBody] SingleToken token)
         {
-            return _tokenService.UpdateFullTokenAsync(token).Result;
+            return _tokenService.UpdateFullTokenAsync(token.Token).Result;
         }
         [HttpPost("ChangePassword")]
         public void ChangePassword([FromBody] PasswordChange input)

@@ -9,6 +9,8 @@ namespace ScenarioManager.Model.DTO.UserGroupDTO
     {        
         public string Name { get; set; }
 
-        public long? ParentGroupId { get; set; }        
+        public long? ParentGroupId { get; set; }   
+                
+        public string Description { get; set; }
     }
 }

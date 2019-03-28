@@ -59,6 +59,7 @@ namespace ScenarioManager.Services
                 numBytesRequested: 256 / 8));
             info.HashedPassword = hashed;
             info.Salt = salt;
+            _userLoginInfoRepository.SaveChanges();
         }
 
         public void Delete(string login)

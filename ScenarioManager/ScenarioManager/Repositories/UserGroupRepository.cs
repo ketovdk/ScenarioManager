@@ -88,6 +88,9 @@ namespace ScenarioManager.Repositories
             if (userGroup == null)
                 throw new Exception("Группа с таким Id не найдена");
             userGroup.Name = input.Name;
+            if(input.Description!=null)
+                userGroup.Description = input.Description;
+            userGroup.ParentGroupId = input.ParentGroupId;
         }
         public void Delete(long id)
         {

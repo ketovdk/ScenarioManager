@@ -14,7 +14,9 @@ namespace ScenarioManager.Mappers.UserGroupMappers
             return new UserGroup
             {
                 Id = input.Id,
-                Name = input.Name
+                Name = input.Name,
+                Description = input.Description,
+                ParentGroupId = input.ParentGroupId,
             };
         }
     }
