@@ -10,6 +10,7 @@ using ScenarioManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ScenarioManager.Controllers
@@ -43,6 +44,8 @@ namespace ScenarioManager.Controllers
             var user = _userRepository.Users.Include(x => x.UserGroup).Where(x => x.Login == login).FirstOrDefault();
             if (user == null)
                 throw new Exception("Пользователь не существует");
+            if (CheckAdmin())
+                return _mapper.Map(user);
             var children = GetChildrenUserGroups();
             if (children.Contains(user.UserGroupId))
                 return _mapper.Map(user);
@@ -57,7 +60,11 @@ namespace ScenarioManager.Controllers
             var user = _userRepository.Users.Include(x => x.UserGroup).Where(x => x.Login == login).FirstOrDefault();
             if (user == null)
                 throw new Exception("Пользователь не существует");
-
+            if (CheckAdmin())
+            {
+                _userRepository.Delete(login);
+                _userRepository.SaveChanges();
+            }
             var children = GetChildrenUserGroups();
             if (children.Contains(user.UserGroupId))
             {
@@ -182,7 +189,11 @@ namespace ScenarioManager.Controllers
             _userRepository.SaveChanges();
         }
 
+        private bool CheckAdmin()
+        {
 
+            return User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value.Equals(Constants.RoleNames.Admin);
+        }
 
         private HashSet<long> GetParentUserGroups()
         {
