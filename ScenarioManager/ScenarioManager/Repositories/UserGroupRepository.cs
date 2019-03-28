@@ -74,7 +74,7 @@ namespace ScenarioManager.Repositories
         }
         public UserGroup this[long id]
         {
-            get { return UserGroups.Where(x => x.Id == id).FirstOrDefault(); }
+            get { return UserGroups.FirstOrDefault(x => x.Id == id); }
         }
 
         public UserGroup Create(UserGroup input)
@@ -84,7 +84,7 @@ namespace ScenarioManager.Repositories
         }
         public void Edit(UserGroup input)
         {
-            var userGroup = UserGroups.Where(x => x.Id == input.Id).FirstOrDefault();
+            var userGroup = UserGroups.FirstOrDefault(x => x.Id == input.Id);
             if (userGroup == null)
                 throw new Exception("Группа с таким Id не найдена");
             userGroup.Name = input.Name;

@@ -81,6 +81,8 @@ namespace ScenarioManager
             services.AddScoped<SmartThingRepository>();
             services.AddScoped<ControllerRepository>();
             services.AddScoped<ControllerScenariosRepository>();
+            services.AddScoped<IMapper<UserGroupWithoutParent, UserGroup>, UserGroupWithoutParentMapper>();
+            services.AddScoped<IMapper<UserGroupWithoutConnections, UserGroup>, UserGroupWithoutConnectionsMapper>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>

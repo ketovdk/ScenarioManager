@@ -30,7 +30,7 @@ namespace ScenarioManager.Repositories
         }
         public bool CheckGuid(string login, Guid guid)
         {
-            var info = _userDbContext.TokenGuids.Where(x => x.Login == login).FirstOrDefault();
+            var info = _userDbContext.TokenGuids.FirstOrDefault(x => x.Login == login);
             if (info == null || info.Guid != guid)
                 return false;
             return true;

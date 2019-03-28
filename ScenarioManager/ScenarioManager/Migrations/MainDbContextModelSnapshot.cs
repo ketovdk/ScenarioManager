@@ -194,6 +194,8 @@ namespace ScenarioManager.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Description");
+
                     b.Property<string>("Name")
                         .IsRequired();
 

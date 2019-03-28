@@ -21,31 +21,53 @@ namespace ScenarioManager.Controllers
         private readonly IMapper<UserGroup, EditUserGroup> _editUserGroupMapper;
         private readonly UserGroupRepository _repository;
         private readonly IMapper<UserGroup, CreateUserGroup> _createUserGroupMapper;
-        public UserGroupController(UserGroupRepository repository, IMapper<UserGroup, CreateUserGroup> createUserGroupMapper, 
-            IMapper<UserGroup, EditUserGroup> editUserGroupMapper)
+        private readonly IMapper<UserGroupWithoutConnections, UserGroup> _userGroupWithoutConnectionsMapper;
+        private readonly IMapper<UserGroupWithoutParent, UserGroup> _userGroupWithoutParentMapper;
+        public UserGroupController(UserGroupRepository repository, IMapper<UserGroup, CreateUserGroup> createUserGroupMapper,
+            IMapper<UserGroup, EditUserGroup> editUserGroupMapper,
+            IMapper<UserGroupWithoutParent, UserGroup> userGroupWithoutParentMapper,
+            IMapper<UserGroupWithoutConnections, UserGroup> userGroupWithoutConnectionsMapper)
         {
             _repository = repository;
             _createUserGroupMapper = createUserGroupMapper;
             _editUserGroupMapper = editUserGroupMapper;
+            _userGroupWithoutConnectionsMapper = userGroupWithoutConnectionsMapper;
+            _userGroupWithoutParentMapper = userGroupWithoutParentMapper;
         }
 
+
+        private void AppendChildren(UserGroup ug, ref Dictionary<long, IEnumerable<UserGroup>> groups)
+        {
+            if (groups.ContainsKey(ug.Id))
+                ug.ChildrenGroups = groups[ug.Id];
+            else
+                ug.ChildrenGroups = new List<UserGroup>();
+            foreach (var ugChildrenGroup in ug.ChildrenGroups)
+            {
+                AppendChildren(ugChildrenGroup, ref groups);
+            }
+        }
         [HttpGet]
-        public UserGroup GetUserGroup()
+        public UserGroupWithoutParent GetUserGroup()
         {
             long id = GetUserGroupId();
-            var returningValue = _repository.UserGroups.Include(x => x.ParentGroup).Include(x => x.ChildrenGroups).Where(x => x.Id == id).FirstOrDefault();
-            if (returningValue == null)
-                throw new Exception("элемент не найден");
-            return returningValue;
+            var userGroup = _repository.UserGroups.FirstOrDefault(x => x.Id == id);
+            if (userGroup == null)
+                throw new Exception("Элемент не найден");
+
+            var groups = _repository.UserGroups.Where(x => x.ParentGroupId.HasValue).GroupBy(x => x.ParentGroupId.Value)
+                .ToDictionary(x => x.Key, x => x.AsEnumerable());
+            AppendChildren(userGroup, ref groups);
+            return _userGroupWithoutParentMapper.Map(userGroup);
         }
 
 
 
         [HttpGet("All")]
-        [Authorize(Roles=Constants.RoleNames.Admin)]
-        public IEnumerable<UserGroup> GetUserGroups()
+        [Authorize(Roles = Constants.RoleNames.Admin)]
+        public IEnumerable<UserGroupWithoutConnections> GetUserGroups()
         {
-            return _repository.UserGroups;
+            return _repository.UserGroups.Select(_userGroupWithoutConnectionsMapper.Map);
         }
 
         [HttpGet("ById/{id}")]
