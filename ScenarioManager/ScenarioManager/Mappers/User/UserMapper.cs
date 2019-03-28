@@ -14,8 +14,10 @@ namespace ScenarioManager.Mappers.User
             return new UserDTO()
             {
                 Login = input.Login,
-                UserGroup = input.UserGroup,
+                UserGroupId = input.UserGroupId,
                 UserType = input.UserType,
+                Info = input.Info,
+                FIO = input.FIO
             };
         }
     }
