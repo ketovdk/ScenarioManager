@@ -37,7 +37,7 @@ namespace ScenarioManager.Controllers
             var children = GetChildrenUserGroups();
             return _userRepository.Users.Include(x => x.UserGroup).Where(x => children.Contains(x.UserGroupId)).Select(x => _mapper.Map(x));
         }
-        [HttpGet("{login}")]
+        [HttpGet("Single/{login}")]
         public UserDTO GetUser(string login)
         {
             var user = _userRepository.Users.Include(x => x.UserGroup).Where(x => x.Login == login).FirstOrDefault();
@@ -51,7 +51,7 @@ namespace ScenarioManager.Controllers
         }
 
         [Authorize(Roles =Constants.RoleNames.Integrator)]
-        [HttpDelete]
+        [HttpDelete("{login}")]
         public void DeleteUser(string login)
         {
             var user = _userRepository.Users.Include(x => x.UserGroup).Where(x => x.Login == login).FirstOrDefault();
@@ -124,6 +124,26 @@ namespace ScenarioManager.Controllers
         {
             return _userRepository.Users.Where(x => x.UserType == UserType.Integrator).Select(x=>_mapper.Map(x));
         }
+
+        [HttpGet("Children/Integrators")]
+        [Authorize(Roles = Constants.RoleNames.Integrator)]
+        public IEnumerable<UserDTO> GetChildIntegrators()
+        {
+            var childrenGroups = GetChildrenUserGroups();
+            return _userRepository.Users
+                .Where(x => x.UserType == UserType.Integrator && childrenGroups.Contains(x.UserGroupId)).AsEnumerable()
+                .Select(_mapper.Map);
+        }
+
+        [HttpGet("Children/Users")]
+        [Authorize(Roles = Constants.RoleNames.Integrator)]
+        public IEnumerable<UserDTO> GetChildUsers()
+        {
+            var childrenGroups = GetChildrenUserGroups();
+            return _userRepository.Users
+                .Where(x => x.UserType == UserType.SimpleUser && childrenGroups.Contains(x.UserGroupId)).AsEnumerable()
+                .Select(_mapper.Map);
+        }
         [HttpGet("AllSimpleUsers")]
         [Authorize(Roles = Constants.RoleNames.Admin)]
         public IEnumerable<UserDTO> GetSimpleUsers()
@@ -132,7 +152,7 @@ namespace ScenarioManager.Controllers
         }
         [Authorize(Roles = Constants.RoleNames.Integrator)]
         [HttpPost]
-        public void PostUser(UserCreate input)
+        public void PostUser([FromBody]UserCreate input)
         {
             var children = GetChildrenUserGroups();
             if (!children.Contains(input.UserGroupId))
@@ -174,7 +194,7 @@ namespace ScenarioManager.Controllers
         }
         private long GetUserGroupId()
         {
-            return Convert.ToInt64(User.Claims.Where(x => x.Type == Constants.ClaimTypeNames.UserGroupId).FirstOrDefault().Value);
+            return Convert.ToInt64(User.Claims.FirstOrDefault(x => x.Type == Constants.ClaimTypeNames.UserGroupId).Value);
         }
     }
 }
