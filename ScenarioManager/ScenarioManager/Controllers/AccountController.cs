@@ -37,7 +37,7 @@ namespace ScenarioManager.Controllers
         {
             return _tokenService.UpdateFullTokenAsync(token).Result;
         }
-
+        [HttpPost("ChangePassword")]
         public void ChangePassword([FromBody] PasswordChange input)
         {
             _accountService.ChangePassword(input);
