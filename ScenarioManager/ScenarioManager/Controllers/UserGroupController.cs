@@ -15,7 +15,6 @@ namespace ScenarioManager.Controllers
 {
     [Produces("application/json")]
     [Route("api/UserGroup")]
-    [Authorize]
     public class UserGroupController : Controller
     {
         private readonly IMapper<UserGroup, EditUserGroup> _editUserGroupMapper;

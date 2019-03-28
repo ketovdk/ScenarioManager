@@ -67,6 +67,8 @@ namespace ScenarioManager.Controllers
                 Login = input.Login,
                 UserGroupId = input.UserGroupId,
                 UserType = input.UserType,
+                FIO=input.FIO,
+                Info = input.Info
             });
             _userRepository.SaveChanges();
         }
@@ -77,7 +79,8 @@ namespace ScenarioManager.Controllers
             _accountService.RegisterAdmin(new LoginPassword()
             {
                 Login = input.Login,
-                Password = input.Password
+                Password = input.Password,
+                
             });
             _repository.Create(_mapper.Map(input));
             _repository.SaveChanges();
