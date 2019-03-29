@@ -75,7 +75,18 @@ namespace ScenarioManager.Controllers
             var currentScenario = _scenarioRepository.Scenarios.FirstOrDefault(x => x.Id == input.Id);
             if (currentScenario == null)
                 throw new Exception("Такого сценария не существует");
-            var children = _userGroupRepository.GetChildrenGroups(GetUserGroupId());
+            if (User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value ==
+                Constants.RoleNames.Admin)
+            {
+                _scenarioRepository.EditScenario(input);
+                foreach (var controller in _connections.All.Include(x => x.Controller)
+                    .Where(x => x.ScenarioId == input.Id).Select(x => x.Controller))
+                {
+                    await ControllerInfoSender.UpdateAsync(controller.Adress, input.Id);
+                }
+                _scenarioRepository.SaveChanges();
+            }
+                var children = _userGroupRepository.GetChildrenGroups(GetUserGroupId());
             if (children.Contains(currentScenario.UserGroupId))
             {
                 _scenarioRepository.EditScenario(input);
@@ -99,6 +110,19 @@ namespace ScenarioManager.Controllers
             var currentScenario = _scenarioRepository.Scenarios.FirstOrDefault(x => x.Id == id);
             if (currentScenario == null)
                 throw new Exception("Такого сценария не существует");
+            if (User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value ==
+                Constants.RoleNames.Admin)
+            {
+                _scenarioRepository.Delete(id);
+                ;
+                foreach (var controller in _connections.All.Include(x => x.Controller)
+                    .Where(x => x.ScenarioId == id).Select(x => x.Controller))
+                {
+                    await ControllerInfoSender.DeleteAsync(controller.Adress, id);
+                }
+                _scenarioRepository.SaveChanges();
+
+            }
             var children = _userGroupRepository.GetChildrenGroups(GetUserGroupId());
             if (children.Contains(currentScenario.UserGroupId))
             {
@@ -121,6 +145,14 @@ namespace ScenarioManager.Controllers
             if (User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value ==
                 Constants.RoleNames.SimpleUser)
                 throw new Exception("Не доступно простому пользователю");
+            if (User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value ==
+                Constants.RoleNames.Admin)
+
+            {
+                var returningScenario = _scenarioRepository.CreateScenario(input);
+                _scenarioRepository.SaveChanges();
+                return returningScenario;
+            }
             var children = _userGroupRepository.GetChildrenGroups(GetUserGroupId());
             if (children.Contains(input.UserGroupId))
             {
