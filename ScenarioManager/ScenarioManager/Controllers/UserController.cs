@@ -43,7 +43,7 @@ namespace ScenarioManager.Controllers
         {
             var user = _userRepository.Users.Include(x => x.UserGroup).Where(x => x.Login == login).FirstOrDefault();
             if (user == null)
-                throw new Exception("Пользователь не существует");
+                return null;
             if (CheckAdmin())
                 return _mapper.Map(user);
             var children = GetChildrenUserGroups();
