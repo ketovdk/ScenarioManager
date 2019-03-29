@@ -12,3 +12,4 @@ C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\Scenar
 C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.RazorTargetAssemblyInfo.cache
 C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.dll
 C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.pdb
+C:\Users\Administrator.TESTPORTAL\Desktop\ScenarioManager\ScenarioManager\ScenarioManager\obj\Release\netcoreapp2.2\ScenarioManager.csprojAssemblyReference.cache

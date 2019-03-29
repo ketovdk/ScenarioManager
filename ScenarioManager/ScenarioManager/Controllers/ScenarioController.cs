@@ -8,6 +8,7 @@ using ScenarioManager.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ScenarioManager.Services;
 
@@ -109,11 +110,13 @@ namespace ScenarioManager.Controllers
                 throw new Exception("Этот сценарий вам не доступен");
         }
 
-
-        [Authorize(Roles = Constants.RoleNames.Integrator)]
+        
         [HttpPost]
         public Scenario CreateScenario([FromBody]Scenario input)
         {
+            if (User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value ==
+                Constants.RoleNames.SimpleUser)
+                throw new Exception("Не доступно простому пользователю");
             var children = _userGroupRepository.GetChildrenGroups(GetUserGroupId());
             if (children.Contains(input.UserGroupId))
             {
