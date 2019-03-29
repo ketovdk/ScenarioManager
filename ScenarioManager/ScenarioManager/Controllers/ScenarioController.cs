@@ -66,10 +66,12 @@ namespace ScenarioManager.Controllers
                 throw new Exception("Этот сценарий вам не доступен");
         }
 
-        [Authorize(Roles =Constants.RoleNames.Integrator)]
         [HttpPut]
         public async Task EditScenario([FromBody]Scenario input)
         {
+            if (User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value ==
+                Constants.RoleNames.SimpleUser)
+                throw new Exception("Не доступно простому пользователю");
             var currentScenario = _scenarioRepository.Scenarios.FirstOrDefault(x => x.Id == input.Id);
             if (currentScenario == null)
                 throw new Exception("Такого сценария не существует");
@@ -88,10 +90,12 @@ namespace ScenarioManager.Controllers
                 throw new Exception("Этот сценарий вам не доступен");
         }
 
-        [Authorize(Roles = Constants.RoleNames.Integrator)]
         [HttpDelete("{id}")]
         public async Task DeleteScenario(long id)
         {
+            if (User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value ==
+                Constants.RoleNames.SimpleUser)
+                throw new Exception("Не доступно простому пользователю");
             var currentScenario = _scenarioRepository.Scenarios.FirstOrDefault(x => x.Id == id);
             if (currentScenario == null)
                 throw new Exception("Такого сценария не существует");
