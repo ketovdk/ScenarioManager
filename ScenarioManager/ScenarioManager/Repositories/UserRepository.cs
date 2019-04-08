@@ -27,8 +27,8 @@ namespace ScenarioManager.Repositories
             var user = Users.Where(x => x.Login == input.Login).FirstOrDefault();
             if (user == null)
                 throw new Exception("Сценарий с таким Id не обнаружен");
-            if (input.UserGroup != null)
-                user.UserGroupId = input.UserGroup.Id;
+            if (input.UserGroupId != -1)
+                user.UserGroupId = input.UserGroupId;
             if (input.UserType != user.UserType)
                 user.UserType = input.UserType;
             if (input.FIO != null)
