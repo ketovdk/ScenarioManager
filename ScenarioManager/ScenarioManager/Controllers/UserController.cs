@@ -87,13 +87,19 @@ namespace ScenarioManager.Controllers
             else
                 throw new Exception("У вас нет доступа к этому пользователю");
         }
-
+        [Authorize(Roles = Constants.RoleNames.Admin)]
+        [HttpPut("Admin")]
+        public void EditUserAsAdmin([FromBody]User input)
+        {
+                _userRepository.Edit(input);
+                _userRepository.SaveChanges();
+           
+        }
         [Authorize(Roles = Constants.RoleNames.Integrator)]
         [HttpPut]
-        public void EditUser(User input)
+        public void EditUser([FromBody]User input)
         {
-            if (
-            User.Identity.Name==input.Login)
+            if (User.Identity.Name==input.Login)
             {
                 _userRepository.Edit(input);
                 _userRepository.SaveChanges();
