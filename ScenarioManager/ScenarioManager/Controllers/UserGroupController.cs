@@ -15,6 +15,7 @@ namespace ScenarioManager.Controllers
 {
     [Produces("application/json")]
     [Route("api/UserGroup")]
+    [Authorize]
     public class UserGroupController : Controller
     {
         private readonly IMapper<UserGroup, EditUserGroup> _editUserGroupMapper;
@@ -70,7 +71,6 @@ namespace ScenarioManager.Controllers
         }
 
         [HttpGet("ById/{id}")]
-        [Authorize(Roles = Constants.RoleNames.Admin)]
         public UserGroupWithoutConnections GetUserGroupById(long id)
         {
             var returning = _repository[id];
