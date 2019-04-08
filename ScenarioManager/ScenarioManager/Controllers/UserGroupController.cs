@@ -71,18 +71,18 @@ namespace ScenarioManager.Controllers
 
         [HttpGet("ById/{id}")]
         [Authorize(Roles = Constants.RoleNames.Admin)]
-        public UserGroup GetUserGroupById(long id)
+        public UserGroupWithoutConnections GetUserGroupById(long id)
         {
             var returning = _repository[id];
 
             if (returning == null)
                 throw new Exception("Группа с таким Id не существует");
 
-            return returning;
+            return _userGroupWithoutConnectionsMapper.Map(returning);
         }
 
         [HttpGet("Children")]
-        //[Authorize(Roles = Constants.RoleNames.Integrator)]
+        [Authorize(Roles = Constants.RoleNames.Integrator)]
         public IEnumerable<UserGroupWithoutConnections> GetChildUserGroups()
         {
             var childGroupsIds = GetChildrenUserGroups();
@@ -116,7 +116,6 @@ namespace ScenarioManager.Controllers
 
         private long GetUserGroupId()
         {
-            return 2;
             return Convert.ToInt64(User.Claims.FirstOrDefault(x => x.Type == Constants.ClaimTypeNames.UserGroupId).Value);
         }
         private HashSet<long> GetParentUserGroups()
