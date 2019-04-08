@@ -47,7 +47,7 @@ namespace ScenarioManager.Services
             var now = DateTime.UtcNow;
 
             var guid =_tokenRepository.SetGuid(identity.Name);
-
+            _tokenRepository.SaveChanges();
             var acessedJwt = new JwtSecurityToken(
                 notBefore: now,
                 claims: identity.Claims,
