@@ -56,7 +56,7 @@ namespace ScenarioManager.Repositories
 
             returningAnswer.Add(id);
             var queue = new Queue<long>();
-            queue.Append(id);
+            queue.Enqueue(id);
 
             while(queue.Count>0)
             {
@@ -65,7 +65,7 @@ namespace ScenarioManager.Repositories
                     foreach (var a in children[current])
                     {
                         returningAnswer.Add(a);
-                        queue.Append(a);
+                        queue.Enqueue(a);
                     }
             }
 
