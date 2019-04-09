@@ -8,7 +8,7 @@ namespace ScenarioManager.Model.DTO.UserGroupDTO
     public class EditUserGroup
     {
         public long Id { get; set; }
-        public long ParentGroupId { get; set; }
+        public long? ParentGroupId { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
     }
