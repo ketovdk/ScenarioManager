@@ -26,15 +26,20 @@ namespace ScenarioManager.Controllers
         [HttpGet("{id}")]
         public SmartThing GetThings(long id)
         {
-            return _thingRepository.Things.Where(x => x.Id == id).FirstOrDefault();
+            return _thingRepository.Things.FirstOrDefault(x => x.Id == id);
         }
 
         [HttpGet]
         public IEnumerable<SmartThing> GetThings()
         {
-            return _thingRepository.Things.Include(x => x.Controller).Where(x => x.Controller.UserGroupId == GetUserGroupId());
+            return _thingRepository.Things.Where(x => x.UserGroupId == GetUserGroupId());
         }
-
+        [HttpGet("AsAdmin")]
+        [Authorize(Roles = Constants.RoleNames.Admin)]
+        public IEnumerable<SmartThing> GetThingsAsAdmin()
+        {
+            return _thingRepository.Things;
+        }
         [HttpPost]
         public SmartThing AddThing([FromBody] SmartThingInput input)
         {

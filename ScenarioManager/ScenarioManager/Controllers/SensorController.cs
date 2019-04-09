@@ -26,13 +26,19 @@ namespace ScenarioManager.Controllers
         [HttpGet("{id}")]
         public Sensor GetSensor(long id)
         {
-            return _sensorRepository.Sensors.Where(x=>x.Id==id).FirstOrDefault();
+            return _sensorRepository.Sensors.FirstOrDefault(x=>x.Id==id);
         }
 
         [HttpGet]
         public IEnumerable<Sensor> GetSensors()
         {
-            return _sensorRepository.Sensors.Include(x => x.Controller).Where(x => x.Controller.UserGroupId == GetUserGroupId());
+            return _sensorRepository.Sensors.Where(x => x.UserGroupId == GetUserGroupId());
+        }
+        [HttpGet("AsAdmin")]
+        [Authorize(Roles = Constants.RoleNames.Admin)]
+        public IEnumerable<Sensor> GetSensorsAsAdmin()
+        {
+            return _sensorRepository.Sensors;
         }
 
         [HttpPost]
