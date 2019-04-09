@@ -28,7 +28,7 @@ namespace ScenarioManager.Controllers
         [HttpGet]
         public IEnumerable<SmartController> Controllers()
         {
-            return _controllerRepository.Controllers.Where(x => x.UserGroupId == GetUserGroupId());
+            return _controllerRepository.Controllers.Where(x => x.UserGroupId == GetUserGroupId()).OrderBy(x => x.Id);
         }
         [HttpGet("{id}")]
         public SmartController Controller(long id)
@@ -50,7 +50,7 @@ namespace ScenarioManager.Controllers
                 {
                     Scenario = x.Scenario,
                     TurnedOn = x.TurnedOn
-                });
+                }).OrderBy(x => x.Scenario.Id);
         }
         [HttpPost("Scenarios")]
         public async Task SetScenarios([FromBody] Scenarios input)

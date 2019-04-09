@@ -32,13 +32,13 @@ namespace ScenarioManager.Controllers
         [HttpGet]
         public IEnumerable<Sensor> GetSensors()
         {
-            return _sensorRepository.Sensors.Where(x => x.UserGroupId == GetUserGroupId());
+            return _sensorRepository.Sensors.Where(x => x.UserGroupId == GetUserGroupId()).OrderBy(x=>x.Id);
         }
         [HttpGet("AsAdmin")]
         [Authorize(Roles = Constants.RoleNames.Admin)]
         public IEnumerable<Sensor> GetSensorsAsAdmin()
         {
-            return _sensorRepository.Sensors;
+            return _sensorRepository.Sensors.OrderBy(x => x.Id);
         }
 
         [HttpPost]

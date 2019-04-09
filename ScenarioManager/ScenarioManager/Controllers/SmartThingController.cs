@@ -32,13 +32,13 @@ namespace ScenarioManager.Controllers
         [HttpGet]
         public IEnumerable<SmartThing> GetThings()
         {
-            return _thingRepository.Things.Where(x => x.UserGroupId == GetUserGroupId());
+            return _thingRepository.Things.Where(x => x.UserGroupId == GetUserGroupId()).OrderBy(x => x.Id);
         }
         [HttpGet("AsAdmin")]
         [Authorize(Roles = Constants.RoleNames.Admin)]
         public IEnumerable<SmartThing> GetThingsAsAdmin()
         {
-            return _thingRepository.Things;
+            return _thingRepository.Things.OrderBy(x => x.Id);
         }
         [HttpPost]
         public SmartThing AddThing([FromBody] SmartThingInput input)

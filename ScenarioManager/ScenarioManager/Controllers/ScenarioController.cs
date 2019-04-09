@@ -36,19 +36,19 @@ namespace ScenarioManager.Controllers
         [HttpGet("Public")]
         public IEnumerable<ScenarioDTO> PublicScenarios()
         {
-            return _scenarioRepository.Scenarios.Where(x => x.Publicity).Select(x=>_mapper.Map(x));
+            return _scenarioRepository.Scenarios.Where(x => x.Publicity).Select(x=>_mapper.Map(x)).OrderBy(x => x.Id);
         }
         [HttpGet("Available")]
         public IEnumerable<ScenarioDTO> ParentScenarios()
         {
             var parents = _userGroupRepository.GetParentGroups(GetUserGroupId());
-            return _scenarioRepository.Scenarios.Include(x => x.UserGroup).Where(x => parents.Contains(x.UserGroupId)).Select(x => _mapper.Map(x));
+            return _scenarioRepository.Scenarios.Include(x => x.UserGroup).Where(x => parents.Contains(x.UserGroupId)).Select(x => _mapper.Map(x)).OrderBy(x => x.Id);
         }
         [HttpGet("Children")]
         public IEnumerable<ScenarioDTO> ChildrenScenarios()
         {
             var children = _userGroupRepository.GetChildrenGroups(GetUserGroupId());
-            return _scenarioRepository.Scenarios.Include(x => x.UserGroup).Where(x => children.Contains(x.UserGroupId)).Select(x => _mapper.Map(x));
+            return _scenarioRepository.Scenarios.Include(x => x.UserGroup).Where(x => children.Contains(x.UserGroupId)).Select(x => _mapper.Map(x)).OrderBy(x => x.Id);
 
         }
 

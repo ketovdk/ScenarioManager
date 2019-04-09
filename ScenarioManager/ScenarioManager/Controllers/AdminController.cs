@@ -37,7 +37,7 @@ namespace ScenarioManager.Controllers
         [HttpGet]
         public IEnumerable<Admin> GetAdmins()
         {
-            return _repository.Admins;
+            return _repository.Admins.OrderBy(x => x.Login);
         }
 
         [HttpGet("{login}")]

@@ -135,7 +135,7 @@ namespace ScenarioManager.Controllers
         [Authorize(Roles = Constants.RoleNames.Admin)]
         public IEnumerable<UserDTO> GetIntegrators()
         {
-            return _userRepository.Users.Where(x => x.UserType == UserType.Integrator).Select(x=>_mapper.Map(x));
+            return _userRepository.Users.Where(x => x.UserType == UserType.Integrator).Select(x=>_mapper.Map(x)).OrderBy(x => x.Login);
         }
 
         [HttpGet("Children/Integrators")]
@@ -145,7 +145,7 @@ namespace ScenarioManager.Controllers
             var childrenGroups = GetChildrenUserGroups();
             return _userRepository.Users
                 .Where(x => x.UserType == UserType.Integrator && childrenGroups.Contains(x.UserGroupId)).AsEnumerable()
-                .Select(_mapper.Map);
+                .Select(_mapper.Map).OrderBy(x => x.Login);
         }
 
         [HttpGet("Children/Users")]
@@ -155,13 +155,13 @@ namespace ScenarioManager.Controllers
             var childrenGroups = GetChildrenUserGroups();
             return _userRepository.Users
                 .Where(x => x.UserType == UserType.SimpleUser && childrenGroups.Contains(x.UserGroupId)).AsEnumerable()
-                .Select(_mapper.Map);
+                .Select(_mapper.Map).OrderBy(x => x.Login);
         }
         [HttpGet("AllSimpleUsers")]
         [Authorize(Roles = Constants.RoleNames.Admin)]
         public IEnumerable<UserDTO> GetSimpleUsers()
         {
-            return _userRepository.Users.Where(x => x.UserType == UserType.SimpleUser).Select(x=>_mapper.Map(x));
+            return _userRepository.Users.Where(x => x.UserType == UserType.SimpleUser).Select(x=>_mapper.Map(x)).OrderBy(x => x.Login);
         }
         [Authorize(Roles = Constants.RoleNames.Integrator)]
         [HttpPost]

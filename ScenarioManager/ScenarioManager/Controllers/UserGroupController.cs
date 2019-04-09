@@ -67,7 +67,7 @@ namespace ScenarioManager.Controllers
         [Authorize(Roles = Constants.RoleNames.Admin)]
         public IEnumerable<UserGroupWithoutConnections> GetUserGroups()
         {
-            return _repository.UserGroups.Select(_userGroupWithoutConnectionsMapper.Map);
+            return _repository.UserGroups.Select(_userGroupWithoutConnectionsMapper.Map).OrderBy(x => x.Id);
         }
 
         [HttpGet("ById/{id}")]
@@ -86,7 +86,7 @@ namespace ScenarioManager.Controllers
         public IEnumerable<UserGroupWithoutConnections> GetChildUserGroups()
         {
             var childGroupsIds = GetChildrenUserGroups();
-            return _repository.UserGroups.Where(x => childGroupsIds.Contains(x.Id)).Select(_userGroupWithoutConnectionsMapper.Map);
+            return _repository.UserGroups.Where(x => childGroupsIds.Contains(x.Id)).Select(_userGroupWithoutConnectionsMapper.Map).OrderBy(x => x.Id);
         }
 
         [HttpPost]
